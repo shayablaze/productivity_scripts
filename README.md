@@ -6,3 +6,9 @@ prov-perf
 $ ./npm install
 $ ./node prov-test.js
 ```
+
+tmux_blaze
+
+```sh
+$ ./tmux_get_started.sh
+```
