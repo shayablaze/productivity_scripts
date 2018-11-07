@@ -12,3 +12,9 @@ tmux_blaze
 ```sh
 $ ./tmux_get_started.sh
 ```
+
+clean_stuff
+
+```sh
+$ ./run_stuff.sh
+```
