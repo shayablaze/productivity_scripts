@@ -19,6 +19,7 @@ console.log(dateBefore);
 mongodb://<user name><Password><address>port/blazemeter
 var MongoClient = require('mongodb').MongoClient;
 
+var before = new Date();
 var foo = function(db){
   db.collection("ready").find().toArray(function(err, result) {
 
@@ -44,9 +45,19 @@ var foo = function(db){
       console.log('required: ' + sessionsInfo.length)
       console.log('actual: ' + counter)
       if (counter < sessionsInfo.length){
-        wait(2);
+        wait(1)
         foo(db);
       }else{
+
+        var after = new Date();
+        var difference = after.getTime() - before.getTime();
+
+        var date = new Date(null);
+        date.setSeconds(difference/1000);
+        difference = date.toISOString().substr(11, 8);
+
+
+        console.log('difference is '+ difference)
         db.close();
       }
     })

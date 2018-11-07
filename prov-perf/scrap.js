@@ -32,7 +32,7 @@ console.log('after is'+after)
 var difference = after.getTime() - before.getTime();
 
 var date = new Date(null);
-date.setSeconds(difference/1000); // specify value for SECONDS here
+date.setSeconds(difference/1000); 
 difference = date.toISOString().substr(11, 8);
 
 
