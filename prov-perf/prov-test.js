@@ -57,7 +57,7 @@ var foo = function(db){
         difference = date.toISOString().substr(11, 8);
 
 
-        console.log('difference is '+ difference)
+        console.log('provisioning took '+ difference)
         db.close();
       }
     })
