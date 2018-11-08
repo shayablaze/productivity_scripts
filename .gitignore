@@ -1,3 +1,5 @@
 
 prov-perf/node_modules/
 prov-perf/package-lock.json
+.idea/
+*pyc*
