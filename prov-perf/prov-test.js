@@ -44,18 +44,18 @@ var foo = function(db){
       })
       console.log('required: ' + sessionsInfo.length)
       console.log('actual: ' + counter)
+      var after = new Date();
+      var difference = after.getTime() - before.getTime();
+
+      var date = new Date(null);
+      date.setSeconds(difference/1000);
+      difference = date.toISOString().substr(11, 8);
+
       if (counter < sessionsInfo.length){
         wait(1)
         foo(db);
+          console.log('we are at '+ difference)
       }else{
-
-        var after = new Date();
-        var difference = after.getTime() - before.getTime();
-
-        var date = new Date(null);
-        date.setSeconds(difference/1000);
-        difference = date.toISOString().substr(11, 8);
-
 
         console.log('provisioning took '+ difference)
         db.close();
