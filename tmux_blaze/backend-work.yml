@@ -44,7 +44,7 @@ root: ~/repos/
 # post: tmux -CC attach -t backend-work
 
 windows:
-  - Console: cd ~/Desktop/repos/a.blazemeter.com/ && clear
+#  - Console: cd ~/Desktop/repos/a.blazemeter.com/ && clear
   - me:
       layout: main-horizontal
       panes:
@@ -55,18 +55,18 @@ windows:
         - cd ~/Desktop/repos/bzdev && source bzdev-venv/bin/activate && python bzdev.py env sync --id  126
         - cd ~/Desktop/repos/bzdev && source bzdev-venv/bin/activate && python bzdev.py env xdebug --id 126
         - kubectl exec -i $(kubectl get pods -l role=bza -o jsonpath="{.items[0].metadata.name}") -- sh -c "tail -f /var/log/blazemeter/blazemeter.log.json | grep --line-buffered update_statuses_end" | jq -r
-  - qa:
-      layout: main-horizontal
-      panes:
-        - $SCRIPTS/qa_logs.zsh
-        - $SCRIPTS/qa_vim.zsh
-        - $SCRIPTS/qa_bash.zsh
-        - $SCRIPTS/qa_mongo.zsh
-  - ci:
-      layout: main-horizontal
-      panes:
-        - $SCRIPTS/ci_logs.zsh
-        - $SCRIPTS/ci_vim.zsh
-        - $SCRIPTS/ci_bash.zsh
-        - $SCRIPTS/ci_mongo.zsh
-  - php-playground: cd ~/php-playground && clear && ll
+#  - qa:
+#      layout: main-horizontal
+#      panes:
+#        - $SCRIPTS/qa_logs.zsh
+#        - $SCRIPTS/qa_vim.zsh
+#        - $SCRIPTS/qa_bash.zsh
+#        - $SCRIPTS/qa_mongo.zsh
+#  - ci:
+#      layout: main-horizontal
+#      panes:
+#        - $SCRIPTS/ci_logs.zsh
+#        - $SCRIPTS/ci_vim.zsh
+#        - $SCRIPTS/ci_bash.zsh
+#        - $SCRIPTS/ci_mongo.zsh
+#  - php-playground: cd ~/php-playground && clear && ll
