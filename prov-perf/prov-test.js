@@ -16,7 +16,7 @@ function wait(ms){
 
 console.log(now);
 console.log(dateBefore);
-mongodb://<user name><Password><address>port/blazemeter
+//mongodb://<user name><Password><address>port/blazemeter
 var MongoClient = require('mongodb').MongoClient;
 
 var before = new Date();
@@ -76,12 +76,6 @@ MongoClient.connect('mongodb://localhost:27019/blazemeter_qa', function(err, db)
         })
         console.log('hello?');
         foo(db);
-        // while (true){
-        //   console.log('bringing data');
-        //   wait(2);
-
-        // }
-
-      })
+       })
     }
 });
