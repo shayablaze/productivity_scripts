@@ -99,3 +99,4 @@ source ~/.bin/tmuxinator.zsh
 alias get-php-errors="zsh ~/useful-scripts/get-php-errors.zsh"
 alias smart-tail="zsh ~/useful-scripts/smart-tail.zsh"
 export SCRIPTS="/Users/ajzye01/Desktop/repos/productivity_scripts/tmux_blaze/useful-scripts"
+alias k=kubectl
