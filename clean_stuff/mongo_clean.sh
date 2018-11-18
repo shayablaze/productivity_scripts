@@ -1,7 +1,6 @@
 use blazemeter_qa
 db.getCollection('integrationProfiles').drop()
 db.getCollection('integrations').drop()
-db.getCollection('tests').drop()
 db.getCollection('apm_kpis').drop()
 db.getCollection('caApm').drop()
 db.getCollection('masterSessions').drop()
