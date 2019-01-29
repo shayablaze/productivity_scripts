@@ -100,3 +100,5 @@ alias get-php-errors="zsh ~/useful-scripts/get-php-errors.zsh"
 alias smart-tail="zsh ~/useful-scripts/smart-tail.zsh"
 export SCRIPTS="/Users/ajzye01/Desktop/repos/productivity_scripts/tmux_blaze/useful-scripts"
 alias k=kubectl
+alias php=/usr/local/Cellar/php@7.2/7.2.14/bin/php
+export PATH=/usr/local/Cellar/php@7.2/7.2.14/bin:$PATH

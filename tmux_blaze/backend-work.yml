@@ -52,8 +52,8 @@ windows:
         - kubectl port-forward "$(kubectl get pods -l role=redis -o jsonpath="{.items[0].metadata.name}")" 6378:6379
         - kubectl port-forward "$(kubectl get pods -l role=mongo -o jsonpath="{.items[0].metadata.name}")" 27019:27017
         - $SCRIPTS/me_bash.zsh
-        - cd ~/Desktop/repos/bzdev && pipenv shell && python bzdev.py env sync --id  126
-        - cd ~/Desktop/repos/bzdev && pipenv shell && python bzdev.py env xdebug --id 126
+        - cd ~/Desktop/repos/bzdev && pipenv run python bzdev.py --context bzdev-gke env sync --id 24
+        - cd ~/Desktop/repos/bzdev && pipenv run python bzdev.py --context bzdev-gke env xdebug --id 24
         - kubectl exec -i $(kubectl get pods -l role=bza -o jsonpath="{.items[0].metadata.name}") -- sh -c "tail -f /var/log/blazemeter/blazemeter.log.json | grep --line-buffered update_statuses_end" | jq -r
 #  - qa:
 #      layout: main-horizontal
