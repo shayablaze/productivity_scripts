@@ -49,11 +49,11 @@ windows:
       layout: main-horizontal
       panes:
         - cd /Users/ajzye01/Desktop/repos/productivity_scripts/clean_stuff
-        - kubectl port-forward "$(kubectl get pods -l role=redis,env_id=392 -o jsonpath="{.items[0].metadata.name}")" 6378:6379
-        - kubectl port-forward "$(kubectl get pods -l role=mongo,env_id=392 -o jsonpath="{.items[0].metadata.name}")" 27019:27017
+        - kubectl port-forward "$(kubectl get pods -l role=redis,env_id=394 -o jsonpath="{.items[0].metadata.name}")" 6378:6379
+        - kubectl port-forward "$(kubectl get pods -l role=mongo,env_id=394 -o jsonpath="{.items[0].metadata.name}")" 27019:27017
         - $SCRIPTS/me_bash.zsh
-        - cd ~/Desktop/repos/bzdev && pipenv run python bzdev.py --context bzdev-gke env sync --id 392
-        - cd ~/Desktop/repos/bzdev && pipenv run python bzdev.py --context bzdev-gke env xdebug --id 392
+        - cd ~/Desktop/repos/bzdev && pipenv run python bzdev.py --context bzdev-gke env sync --id 394
+        - cd ~/Desktop/repos/bzdev && pipenv run python bzdev.py --context bzdev-gke env xdebug --id 394
         - kubectl exec -i $(kubectl get pods -l role=bza -o jsonpath="{.items[0].metadata.name}") -- sh -c "tail -f /var/log/blazemeter/blazemeter.log.json | grep --line-buffered update_statuses_end" | jq -r
 #  - qa:
 #      layout: main-horizontal
