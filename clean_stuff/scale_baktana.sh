@@ -1,4 +1,4 @@
-kubectl scale deploy dpl-backend-worker-scheduler-394-shayaa-gcp --replicas=2
-kubectl scale deploy dpl-bza-394-shayaa-gcp --replicas=2
-kubectl scale deploy dpl-data-394-shayaa-gcp --replicas=2
-kubectl scale deploy dpl-backend-worker-394-shayaa-gcp --replicas=200
+kubectl scale deploy dpl-backend-worker-scheduler-913-shayaa-gcp --replicas=5
+kubectl scale deploy dpl-bza-913-shayaa-gcp --replicas=5
+kubectl scale deploy dpl-data-913-shayaa-gcp --replicas=5
+kubectl scale deploy dpl-backend-worker-913-shayaa-gcp --replicas=200
