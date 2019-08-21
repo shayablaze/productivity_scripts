@@ -7,7 +7,7 @@
 
 #### step 1:
 ```sh
-$ python start.py
+$ python two_reports.py
 ```
 #### step 2:
 Go to folder 'results' and you should see two excels. One displays what improved, meaning a test that failed in "before.csv" but passed in 'after.csv' and the other excel, what is a regression(the opposite). 
