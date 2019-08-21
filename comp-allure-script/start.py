@@ -2,22 +2,44 @@ import pandas as pd
 import json
 
 
-def objectify_csv(file_name):
+def diff_which_tests_ran(file_1, file2):
+
+    object_1 = objectify_csv(file_1, True)
+    object_2 = objectify_csv(file2, True)
+
+    only_in_1 = []
+    for key, value in object_1.items():
+        if key not in object_2.keys():
+            only_in_1.append(key)
+
+    only_in_2 = []
+    for key, value in object_2.items():
+        if key not in object_1.keys():
+            only_in_2.append(key)
+    pd.read_json(json.dumps(only_in_1)).to_csv('results/only_in_before.csv')
+    pd.read_json(json.dumps(only_in_2)).to_csv('results/only_in_after.csv')
+
+
+def objectify_csv(file_name, remove_skip=True):
     ret = {}
     df = pd.read_csv(file_name)
     for index, row in df.iterrows():
         status = row['Status']
-        if status != 'skipped':
-            name = row['Name']
-            ret[name] = status
+        if status is 'skipped' and remove_skip:
+            continue
+        name = row['Name']
+        ret[name] = status
+
     return ret
 
 
-file_name_before = 'config/before.csv'
-file_name_after = 'config/after.csv'
+file_name_before = 'config/ci.csv'
+file_name_after = 'config/new.csv'
 
 before_object = objectify_csv(file_name_before)
 after_object = objectify_csv(file_name_after)
+
+diff_which_tests_ran(file_name_before, file_name_after)
 
 diffs_good = []
 diffs_bad = []
