@@ -3,6 +3,10 @@ import json
 from utils import objectify_csv
 from utils import initialize_arr_for_counting
 import os
+from os import path
+
+if path.exists("config/.DS_Store"):
+    os.remove('config/.DS_Store')
 the_files = os.listdir('config')
 
 for a_file_name in the_files:
