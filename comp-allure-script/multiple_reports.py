@@ -3,8 +3,15 @@ import json
 from utils import objectify_csv
 from utils import initialize_arr_for_counting
 import os
-# os.remove('config/.DS_Store')
 the_files = os.listdir('config')
+
+for a_file_name in the_files:
+    file_extension = a_file_name.split('.')[len(a_file_name.split('.')) -1]
+    if file_extension != 'csv':
+        print('*******non csv file found {}***********'.format(file_extension) )
+        raise Exception('non csv file found')
+    print(file_extension)
+
 number_of_runs = len(the_files)
 print(number_of_runs)
 
@@ -25,7 +32,7 @@ def find_flakiness(tests_list, type):
 
 
 tests_that_failed = {}
-tests_that_ran = {}
+tests_that_existed = {}
 tests_that_skipped = {}
 
 for file_name in the_files:
@@ -34,13 +41,12 @@ for file_name in the_files:
     for key,value in current_object.items():
         if value not in ['passed', 'skipped']:
             initialize_arr_for_counting(tests_that_failed, key)
-        if value != 'skipped':
-            initialize_arr_for_counting(tests_that_ran, key)
         if value == 'skipped':
             initialize_arr_for_counting(tests_that_skipped, key)
+        initialize_arr_for_counting(tests_that_existed, key)
 
 find_flakiness(tests_that_failed, 'failures')
-find_flakiness(tests_that_ran, 'runs')
+find_flakiness(tests_that_existed, 'exist')
 find_flakiness(tests_that_skipped, 'skips')
 
 print('finished')
