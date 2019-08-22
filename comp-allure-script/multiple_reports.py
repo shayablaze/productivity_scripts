@@ -27,16 +27,16 @@ for key,value in result.items():
 pd.read_json(json.dumps(result_nice)).to_csv('results/report_mulitple.csv')
 
 
-consistent = []
+consistent_failures = []
 flaky = []
 
 for elem in result_nice:
     if elem.get('number_of_failures') == number_of_runs:
-        consistent.append(elem.get('test name'))
+        consistent_failures.append(elem.get('test name'))
     else:
         flaky.append({'test name': elem.get('test name'), 'ratio':'{0}/{1}'.format(elem.get('number_of_failures'), number_of_runs) })
 pd.read_json(json.dumps(flaky)).to_csv('results/report_flaky.csv')
-pd.read_json(json.dumps(consistent)).to_csv('results/report_consistent.csv')
+pd.read_json(json.dumps(consistent_failures)).to_csv('results/report_consistent.csv')
 
 print('finished')
 
