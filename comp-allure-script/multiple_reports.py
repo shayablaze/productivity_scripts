@@ -10,10 +10,8 @@ for a_file_name in the_files:
     if file_extension != 'csv':
         print('*******non csv file found {}***********'.format(file_extension) )
         raise Exception('non csv file found')
-    print(file_extension)
 
 number_of_runs = len(the_files)
-print(number_of_runs)
 
 
 def find_flakiness(tests_list, type):
@@ -36,7 +34,6 @@ tests_that_existed = {}
 tests_that_skipped = {}
 
 for file_name in the_files:
-    print(file_name)
     current_object = objectify_csv('config/' + file_name)
     for key,value in current_object.items():
         if value not in ['passed', 'skipped']:
