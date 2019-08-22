@@ -41,6 +41,7 @@ for file_name in the_files:
 
 find_flakiness(tests_that_failed, 'failures')
 find_flakiness(tests_that_ran, 'runs')
+find_flakiness(tests_that_skipped, 'skips')
 
 print('finished')
 
