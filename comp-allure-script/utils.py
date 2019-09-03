@@ -21,9 +21,10 @@ def trim_name(name):
     return name
 
 
-def initialize_arr_for_counting(arr, key):
+def initialize_arr_for_counting(arr, key, file_name):
     if arr.get(key):
-        arr[key] = arr[key] + 1
+        arr[key]['count'] = arr[key]['count'] + 1
+        arr[key]['file_names'].append(file_name)
     else:
-        arr[key] = 1
+        arr[key] = {'count' : 1, 'file_names':[file_name]}
 

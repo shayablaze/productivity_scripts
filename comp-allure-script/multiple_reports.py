@@ -76,12 +76,12 @@ def find_flakiness(tests_list, type):
     consistent = []
     flaky = []
     for key,value in tests_list.items():
-        nicely_formatted_arr.append({'number_of_appearances': value, 'test name': key})
+        nicely_formatted_arr.append({'number_of_appearances': value['count'], 'test name': key, 'file_names': value['file_names']})
     for elem in nicely_formatted_arr:
         if elem.get('number_of_appearances') == number_of_runs:
             consistent.append(elem.get('test name'))
         else:
-            flaky.append({'test name': elem.get('test name'), 'ratio':'{0}/{1}'.format(elem.get('number_of_appearances'), number_of_runs) })
+            flaky.append({'test name': elem.get('test name'), 'ratio':'{0}/{1}'.format(elem.get('number_of_appearances'), number_of_runs), 'file_names' : elem.get('file_names')})
     pd.read_json(json.dumps(flaky)).to_csv('results/report_flaky_{}.csv'.format(type))
     pd.read_json(json.dumps(consistent)).to_csv('results/report_consistent_{}.csv'.format(type))
 
@@ -95,10 +95,10 @@ for file_name in the_files:
     current_object = objectify_csv('config/' + file_name)
     for key,value in current_object.items():
         if value not in ['passed', 'skipped']:
-            initialize_arr_for_counting(tests_that_failed, key)
+            initialize_arr_for_counting(tests_that_failed, key, file_name)
         if value == 'skipped':
-            initialize_arr_for_counting(tests_that_skipped, key)
-        initialize_arr_for_counting(tests_that_existed, key)
+            initialize_arr_for_counting(tests_that_skipped, key, file_name)
+        initialize_arr_for_counting(tests_that_existed, key, file_name)
 
 find_flakiness(tests_that_failed, 'failures')
 find_flakiness(tests_that_existed, 'exist')
