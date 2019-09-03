@@ -3,7 +3,7 @@ import pandas as pd
 
 def objectify_csv(file_name):
     ret = {}
-    df = pd.read_csv(file_name)
+    df = pd.read_csv(file_name, engine='python', encoding='utf-8', error_bad_lines=False)
     for index, row in df.iterrows():
         status = row['Status']
         name = trim_name(row['Name'])
