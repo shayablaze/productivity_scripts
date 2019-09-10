@@ -1,6 +1,7 @@
 import pandas as pd
 import json
 from utils import objectify_csv
+from utils import sort_flaky
 from utils import initialize_arr_for_counting
 import os
 from os import path
@@ -54,7 +55,7 @@ builds = loaded_json['builds']
 #     if (i >= 2):
 #         break
 
-build_numbers = [1326, 1324, 1323, 1321]
+build_numbers = [1339, 1338, 1337, 1336, 1335, 1334, 1333, 1332]
 for x in build_numbers:
     build_number = x
     print " build {0}) ".format( build_number)
@@ -98,6 +99,10 @@ def find_flakiness(tests_list, type):
             consistent.append(elem.get('test name'))
         else:
             flaky.append({'test name': elem.get('test name'), 'ratio':'{0}/{1}'.format(elem.get('number_of_appearances'), number_of_runs), 'file_names' : elem.get('file_names')})
+
+
+    flaky = sort_flaky(flaky)
+
     pd.read_json(json.dumps(flaky)).to_csv('results/report_flaky_{}.csv'.format(type))
     pd.read_json(json.dumps(consistent)).to_csv('results/report_consistent_{}.csv'.format(type))
 

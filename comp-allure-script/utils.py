@@ -28,3 +28,24 @@ def initialize_arr_for_counting(arr, key, file_name):
     else:
         arr[key] = {'count' : 1, 'file_names':[file_name]}
 
+
+def less_than(x, y):
+    return x < y
+
+
+def make_comparator():
+    def compare(x, y):
+        x = x['ratio'].split('/')[0]
+        y = y['ratio'].split('/')[0]
+        if less_than(x, y):
+            return -1
+        elif less_than(y, x):
+            return 1
+        else:
+            return 0
+    return compare
+
+
+def sort_flaky(subjects):
+    sorted_dict = sorted(subjects, cmp=make_comparator(), reverse=False)
+    return sorted_dict
