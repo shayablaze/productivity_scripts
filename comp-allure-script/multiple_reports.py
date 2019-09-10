@@ -55,7 +55,7 @@ builds = loaded_json['builds']
 #     if (i >= 2):
 #         break
 
-build_numbers = [1339, 1338, 1337, 1336, 1335, 1334, 1333, 1332]
+build_numbers = [1340, 1339, 1338, 1337, 1336, 1335, 1334, 1333, 1332]
 for x in build_numbers:
     build_number = x
     print " build {0}) ".format( build_number)
