@@ -38,10 +38,26 @@ response = requests.get('http://new-jenkins.blazemeter.com:8080/job/API-TEST-BZA
 
 loaded_json = response.json()
 builds = loaded_json['builds']
-i =0
-for x in builds:
-    build_number = x['number']
-    print "{0}) build {1}".format(i, build_number)
+# i =0
+# for x in builds:
+#     build_number = x['number']
+#     print "{0}) build {1}".format(i, build_number)
+#     response = requests.get('http://new-jenkins.blazemeter.com:8080/job/API-TEST-BZA/{0}/allure/data/suites.csv'.format(build_number), cookies=cookies, verify=False)
+#     excel = response.content
+#     if excel.startswith('<html>') or build_number > 1293 or build_number==1292:
+#         print 'build {} not ready'.format(build_number)
+#     else:
+#         f = open("config/{}.csv".format(build_number), "w+")
+#         f.write(excel)
+#         print 'build {} downloaded successfully'.format(build_number)
+#         i += 1
+#     if (i >= 2):
+#         break
+
+build_numbers = [1326, 1324, 1323, 1321]
+for x in build_numbers:
+    build_number = x
+    print " build {0}) ".format( build_number)
     response = requests.get('http://new-jenkins.blazemeter.com:8080/job/API-TEST-BZA/{0}/allure/data/suites.csv'.format(build_number), cookies=cookies, verify=False)
     excel = response.content
     if excel.startswith('<html>'):
@@ -50,9 +66,9 @@ for x in builds:
         f = open("config/{}.csv".format(build_number), "w+")
         f.write(excel)
         print 'build {} downloaded successfully'.format(build_number)
-        i += 1
-    if (i >= 10):
-        break
+    #     i += 1
+    # if (i >= 10):
+    #     break
 
 
 
