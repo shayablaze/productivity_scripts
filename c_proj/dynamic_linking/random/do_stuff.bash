@@ -1,5 +1,5 @@
-rm random_num
-rm -rf *.o
+#rm random_num
+#rm -rf *.o
 gcc random_num.c -o random_num
 gcc -shared -fPIC unrandom.c -o unrandom.so
 echo "now regular"

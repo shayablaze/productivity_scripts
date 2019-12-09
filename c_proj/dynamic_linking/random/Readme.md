@@ -6,4 +6,4 @@ gcc -shared -fPIC unrandom.c -o unrandom.so
 // LD_PRELOAD=$PWD/unrandom.so ./random_num
 // or
 // export LD_PRELOAD=$PWD/unrandom.so
-// random_num
+// random_num~~~~

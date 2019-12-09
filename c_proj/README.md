@@ -1,2 +1,2 @@
 docker build .
-docker run -it -v $(pwd):/app d50517ecfbd8
+docker run -it -v $(pwd):/app 7d882bd60c68
