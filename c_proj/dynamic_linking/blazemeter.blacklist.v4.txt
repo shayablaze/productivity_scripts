@@ -1,0 +1,2 @@
+127.0.0.1 localhost
+127.0.0.1  google.com www.google.com facebook.com www.facebook.com disney.com www.disney.com abc.com www.abc.com disneyplus.com www.disneyplus.com starwars.com www.starwars.com a.blazemeter.com
