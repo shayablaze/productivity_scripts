@@ -12,4 +12,8 @@ db.getCollection('instancesDescriberEvents').drop()
 db.getCollection('eventlog').drop()
 db.getCollection('instances').drop()
 db.getCollection('logicalRetries').drop()
+#db.getCollection('tests').drop()
+#db.getCollection('testCollections').drop()
+#db.getCollection('test_files_parsing').drop()
+
 

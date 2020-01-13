@@ -44,7 +44,7 @@ static char *lookup_alias(const char *alias)
 	char *ret = NULL;
 	FILE *hosts_file = NULL;
 	char *home_env = getenv("HOME");
-	char *fname = "aaa";
+	char *fname = "/app/aaa";
 	char *line = NULL;
 	size_t line_len;
 
