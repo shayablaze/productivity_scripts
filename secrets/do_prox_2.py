@@ -46,7 +46,7 @@ class AddHeader:
             'Taurus CLI Tool': 'USED_TO_BE_TAURUS_CLI_TOOL',
             'Status changed to TERMINATING': 'USED_TO_BE_STATUS_CHANGED',
             'Submitting json of length': 'USED_TO_BE_SUBMITTING',
-            'Forbidden': 'USED_TO_BE_FORBIDDEN',
+            'Forbidden': 'USED_TO_BE_FORBIDDEN_CHASED_AWAY',
         }
 
         secrets_encryptor = SecretsEncryptor()
