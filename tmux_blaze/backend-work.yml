@@ -44,29 +44,29 @@ root: ~/repos/
 # post: tmux -CC attach -t backend-work
 
 windows:
-  - Console: cd ~/Desktop/repos/a.blazemeter.com/ && clear
+#  - Console: cd ~/Desktop/repos/a.blazemeter.com/ && clear
   - me:
       layout: main-horizontal
       panes:
         - cd /Users/ajzye01/Desktop/repos/productivity_scripts/clean_stuff
-        - kubectl port-forward "$(kubectl get pods -l role=redis -o jsonpath="{.items[0].metadata.name}")" 6378:6379
-        - kubectl port-forward "$(kubectl get pods -l role=mongo -o jsonpath="{.items[0].metadata.name}")" 27019:27017
+        - kubectl port-forward "$(kubectl get pods -l role=redis,env_id=731 -o jsonpath="{.items[0].metadata.name}")" 6378:6379
+        - kubectl port-forward "$(kubectl get pods -l role=mongo,env_id=731 -o jsonpath="{.items[0].metadata.name}")" 27019:27017
         - $SCRIPTS/me_bash.zsh
-        - cd ~/Desktop/repos/bzdev && source bzdev-venv/bin/activate && python bzdev.py env sync --id  126
-        - cd ~/Desktop/repos/bzdev && source bzdev-venv/bin/activate && python bzdev.py env xdebug --id 126
+        - cd ~/Desktop/repos/bzdev && pipenv run python bzdev.py --context bzdev-gke env sync --id 731
+        - cd ~/Desktop/repos/bzdev && pipenv run python bzdev.py --context bzdev-gke env xdebug --id 731
         - kubectl exec -i $(kubectl get pods -l role=bza -o jsonpath="{.items[0].metadata.name}") -- sh -c "tail -f /var/log/blazemeter/blazemeter.log.json | grep --line-buffered update_statuses_end" | jq -r
-  - qa:
-      layout: main-horizontal
-      panes:
-        - $SCRIPTS/qa_logs.zsh
-        - $SCRIPTS/qa_vim.zsh
-        - $SCRIPTS/qa_bash.zsh
-        - $SCRIPTS/qa_mongo.zsh
-  - ci:
-      layout: main-horizontal
-      panes:
-        - $SCRIPTS/ci_logs.zsh
-        - $SCRIPTS/ci_vim.zsh
-        - $SCRIPTS/ci_bash.zsh
-        - $SCRIPTS/ci_mongo.zsh
-  - php-playground: cd ~/php-playground && clear && ll
+#  - qa:
+#      layout: main-horizontal
+#      panes:
+#        - $SCRIPTS/qa_logs.zsh
+#        - $SCRIPTS/qa_vim.zsh
+#        - $SCRIPTS/qa_bash.zsh
+#        - $SCRIPTS/qa_mongo.zsh
+#  - ci:
+#      layout: main-horizontal
+#      panes:
+#        - $SCRIPTS/ci_logs.zsh
+#        - $SCRIPTS/ci_vim.zsh
+#        - $SCRIPTS/ci_bash.zsh
+#        - $SCRIPTS/ci_mongo.zsh
+#  - php-playground: cd ~/php-playground && clear && ll
