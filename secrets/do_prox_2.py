@@ -46,14 +46,16 @@ class AddHeader:
             'Taurus CLI Tool': 'USED_TO_BE_TAURUS_CLI_TOOL',
             'Status changed to TERMINATING': 'USED_TO_BE_STATUS_CHANGED',
             'Submitting json of length': 'USED_TO_BE_SUBMITTING',
-            'Forbidden': 'USED_TO_BE_FORBIDDEN_CHASED_AWAY',
+            'Forbidden': 'USED_TO_BE_FORBIDDEN_NOT_ANYMORE',
         }
-
-        secrets_encryptor = SecretsEncryptor()
-        encrypted_data_content = secrets_encryptor.encrypt_data_content(flow.request.content, secrets)
-        print('returned data is ')
-        print(encrypted_data_content)
-        flow.request.content = encrypted_data_content
+        if not flow.request.url.startswith('https://s3.amazonaws.com'):
+            secrets_encryptor = SecretsEncryptor()
+            encrypted_data_content = secrets_encryptor.encrypt_data_content(flow.request.content, secrets)
+            print('returned data is ')
+            print(encrypted_data_content)
+            flow.request.content = encrypted_data_content
+        else:
+            print('skipping the thing i am s3')
 
 def run_proxy(listen_port):
 
