@@ -5,7 +5,7 @@ from jproperties import Properties
 from datetime import datetime
 
 from pymongo import MongoClient
-
+from os.path import exists
 p = Properties()
 with open("props", "rb") as f:
     p.load(f, "utf-8")
@@ -27,7 +27,8 @@ tests = []
 masters_with_no_test = []
 
 file_name = 'tests_to_migrate_list.txt'
-os.remove(file_name)
+if exists(file_name):
+    os.remove(file_name)
 f = open(file_name, "a")
 count_tests = 0
 count_master_no_test = 0
