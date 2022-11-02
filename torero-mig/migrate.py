@@ -24,6 +24,7 @@ start = datetime(2022, 11, 2, 7, 51, 4)
 temp = collection.find( {"$and":[{"created": {"$gte":start} }]}  )
 
 tests = []
+multi_tests = []
 masters_with_no_test = []
 
 file_name = 'tests_to_migrate_list.txt'
@@ -41,10 +42,10 @@ for doc in temp:
         tests = list(set(tests) | set([doc['test']]))
     elif 'testCollection' in doc:
         # print(doc['test'])
-        if doc['testCollection'] not in tests:
+
+        if doc['testCollection'] not in multi_tests:
             count_tests+=1
-            f.write(f'{doc["testCollection"]}, ')
-        tests = list(set(tests) | set([doc['testCollection']]))
+        multi_tests = list(set(multi_tests) | set([doc['testCollection']]))
         # print(tests)
     else:
         master_id = doc['_id']
@@ -52,14 +53,25 @@ for doc in temp:
         masters_with_no_test = list(set(masters_with_no_test) | set([doc['_id']]))
         count_master_no_test +=1
 
-print('no tests in these masters')
-print(masters_with_no_test)
+print('here are multi tests')
+print(multi_tests)
 
-print('count of tests')
-print(count_tests)
+collection = db["testCollections"]
 
-print('count of no tests')
-print(count_master_no_test)
+
+temp = collection.find( {"$and":[{"_id": {"$in":multi_tests} }]}  )
+print('here are the test collections from db')
+for doc in temp:
+    print(doc)
+
+# print('no tests in these masters')
+# print(masters_with_no_test)
+#
+# print('count of tests')
+# print(count_tests)
+#
+# print('count of no tests')
+# print(count_master_no_test)
 f.close()
 print('done')
 
