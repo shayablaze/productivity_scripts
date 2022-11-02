@@ -61,8 +61,15 @@ collection = db["testCollections"]
 
 temp = collection.find( {"$and":[{"_id": {"$in":multi_tests} }]}  )
 print('here are the test collections from db')
+
+print('tests before')
+print(len(tests))
 for doc in temp:
-    print(doc)
+    single_tests_from_multi_test = list(map(lambda x: x['testId'], doc['testsForExecutions']))
+    tests = list(set(tests) | set(single_tests_from_multi_test))
+print('tests after')
+print(len(tests))
+    # print(doc)
 
 # print('no tests in these masters')
 # print(masters_with_no_test)
