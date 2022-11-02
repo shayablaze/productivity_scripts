@@ -19,7 +19,7 @@ cluster = MongoClient(mongo_string)
 db = cluster['blazemeter']
 collection = db["masterSessions"]
 
-start = datetime(2022, 11, 1, 7, 51, 4)
+start = datetime(2022, 11, 2, 7, 51, 4)
 
 temp = collection.find( {"$and":[{"created": {"$gte":start} }]}  )
 
@@ -37,11 +37,13 @@ for doc in temp:
         # print(doc['test'])
         if doc['test'] not in tests:
             count_tests+=1
+            f.write(f'{doc["test"]}, ')
         tests = list(set(tests) | set([doc['test']]))
     elif 'testCollection' in doc:
         # print(doc['test'])
         if doc['testCollection'] not in tests:
             count_tests+=1
+            f.write(f'{doc["testCollection"]}, ')
         tests = list(set(tests) | set([doc['testCollection']]))
         # print(tests)
     else:
