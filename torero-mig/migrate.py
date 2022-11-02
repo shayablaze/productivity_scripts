@@ -1,3 +1,5 @@
+import time
+
 from jproperties import Properties
 
 from datetime import datetime
@@ -19,9 +21,10 @@ collection = db["masterSessions"]
 
 start = datetime(2022, 10, 25, 7, 51, 4)
 
-temp = collection.find( {"$and":[ {"_id": 65008935.0}, {"created": {"$gte":start} }]}  )
+temp = collection.find( {"$and":[  {"created": {"$gte":start} }]}  )
 for doc in temp:
     print(doc)
+    time.sleep(1)
 print('done')
 
 
