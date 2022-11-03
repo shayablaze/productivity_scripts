@@ -27,7 +27,7 @@ cluster = MongoClient(mongo_string)
 db = cluster['blazemeter']
 collection = db["masterSessions"]
 
-start = datetime(2021, 11, 2, 7, 51, 4)
+start = datetime(2022, 11, 3, 1, 51, 4)
 
 temp = collection.find( {"$and":[{"created": {"$gte":start} }]}  )
 
@@ -54,7 +54,7 @@ for doc in temp:
 
     current_time = now.strftime("%H:%M:%S")
 
-    print(f'in test iteration {i} out of {number_of_documents} with current time {current_time}')
+    # print(f'in test iteration {i} out of {number_of_documents} with current time {current_time}')
     i+=1
     if 'test' in doc:
         # print(doc['test'])
@@ -98,11 +98,30 @@ print(len(tests))
     # print(doc)
 i = 1
 
+
+
+
+
+collection = db["tests"]
+temp = collection.find( {"$and":[{"_id": {"$in":tests} } ,   {"configuration.scriptType" : { "$in": ["jmeter", "taurus"]  }}     ]}  )
+
+print('calculating count for test AFTER excluding non jmeter')
+number_of_documents = collection.count_documents({"$and":[{"_id": {"$in":tests} } ,   {"configuration.scriptType" : { "$in": ["jmeter", "taurus"]  }}     ]})
+
+final_test_ids = []
+for doc in temp:
+    final_test_ids.append(doc['_id'])
+
+
+
+
+
+
 for test in tests:
     now = datetime.now()
 
     current_time = now.strftime("%H:%M:%S")
-    print(f'in MULTITEST iteration {i} out of {number_of_documents} with time {current_time}')
+    # print(f'in MULTITEST iteration {i} out of {number_of_documents} with time {current_time}')
     i+=1
     f.write(f'{test}\n')
 # print('no tests in these masters')
