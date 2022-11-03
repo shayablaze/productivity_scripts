@@ -19,5 +19,5 @@ collection = db["accounts"]
 temp = collection.find( {"$and":[{"uid": {'$in':['a-773774']} }]}  )
 
 for doc in temp:
-    print(doc['email'])
-
+    subscriptions = list( map( lambda x: x['_id'], list(filter(lambda x : x['canceled'] == False , doc['subscriptions']))))
+print('a')

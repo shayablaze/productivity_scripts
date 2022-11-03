@@ -144,7 +144,9 @@ for doc in temp:
 
 print(len(list(test_info_by_account.keys())))
 print(test_info_by_account)
+print(list(test_info_by_account.keys()))
 print('done rose')
+
 
 
 # print('after iterating results')
