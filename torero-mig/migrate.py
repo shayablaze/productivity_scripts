@@ -6,6 +6,14 @@ from datetime import datetime
 
 from pymongo import MongoClient
 from os.path import exists
+
+
+now = datetime.now()
+
+current_time = now.strftime("%H:%M:%S")
+print("before time =", current_time)
+
+
 p = Properties()
 with open("props", "rb") as f:
     p.load(f, "utf-8")
@@ -19,7 +27,7 @@ cluster = MongoClient(mongo_string)
 db = cluster['blazemeter']
 collection = db["masterSessions"]
 
-start = datetime(2022, 11, 2, 7, 51, 4)
+start = datetime(2021, 11, 2, 7, 51, 4)
 
 temp = collection.find( {"$and":[{"created": {"$gte":start} }]}  )
 
@@ -33,12 +41,25 @@ if exists(file_name):
 f = open(file_name, "a")
 count_tests = 0
 count_master_no_test = 0
+print('before iterating results')
+i = 1
+
+print('calculating count for test')
+number_of_documents = collection.count_documents({"$and":[{"created": {"$gte":start} }]})
+print(f'we got {number_of_documents} masters')
+
 for doc in temp:
+
+    now = datetime.now()
+
+    current_time = now.strftime("%H:%M:%S")
+
+    print(f'in test iteration {i} out of {number_of_documents} with current time {current_time}')
+    i+=1
     if 'test' in doc:
         # print(doc['test'])
         if doc['test'] not in tests:
             count_tests+=1
-            f.write(f'{doc["test"]}, ')
         tests = list(set(tests) | set([doc['test']]))
     elif 'testCollection' in doc:
         # print(doc['test'])
@@ -52,6 +73,7 @@ for doc in temp:
         # print(f'no test wtf with master: {master_id}')
         masters_with_no_test = list(set(masters_with_no_test) | set([doc['_id']]))
         count_master_no_test +=1
+print('after iterating results')
 
 print('here are multi tests')
 print(multi_tests)
@@ -64,13 +86,25 @@ print('here are the test collections from db')
 
 print('tests before')
 print(len(tests))
+print('calculating count for multi test')
+number_of_documents = collection.count_documents({"$and":[{"_id": {"$in":multi_tests} }]})
+print(f'we got {number_of_documents} multi tests')
+
 for doc in temp:
     single_tests_from_multi_test = list(map(lambda x: x['testId'], doc['testsForExecutions']))
     tests = list(set(tests) | set(single_tests_from_multi_test))
 print('tests after')
 print(len(tests))
     # print(doc)
+i = 1
 
+for test in tests:
+    now = datetime.now()
+
+    current_time = now.strftime("%H:%M:%S")
+    print(f'in MULTITEST iteration {i} out of {number_of_documents} with time {current_time}')
+    i+=1
+    f.write(f'{test}\n')
 # print('no tests in these masters')
 # print(masters_with_no_test)
 #
@@ -80,6 +114,11 @@ print(len(tests))
 # print('count of no tests')
 # print(count_master_no_test)
 f.close()
+
+now = datetime.now()
+
+current_time = now.strftime("%H:%M:%S")
+print("after time =", current_time)
 print('done')
 
 

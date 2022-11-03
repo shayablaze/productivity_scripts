@@ -10,10 +10,17 @@ import os
 # f.close()
 # print(count_tests)
 
+#
+# arr = [1,2,3,7]
+#
+# bbb = [2,3,4,5,6]
+#
+# arr = list(set(arr) | set(bbb))
+# print(arr)
 
-arr = [1,2,3,7]
+from datetime import datetime
 
-bbb = [2,3,4,5,6]
+now = datetime.now()
 
-arr = list(set(arr) | set(bbb))
-print(arr)
+current_time = now.strftime("%H:%M:%S")
+print("Current Time =", current_time)
