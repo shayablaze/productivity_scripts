@@ -30,7 +30,7 @@ cluster = MongoClient(mongo_string)
 db = cluster['blazemeter']
 collection = db["masterSessions"]
 
-start = datetime(2022, 11, 3, 1, 51, 4)
+start = datetime(2022, 11, 3, 5, 51, 4)
 
 temp = collection.find( {"$and":[{"created": {"$gte":start} }]}  )
 
@@ -50,6 +50,10 @@ i = 1
 print('calculating count for test')
 number_of_documents = collection.count_documents({"$and":[{"created": {"$gte":start} }]})
 print(f'we got {number_of_documents} masters')
+
+if number_of_documents == 0:
+    print('good bye')
+    exit()
 
 for doc in temp:
 
