@@ -19,8 +19,11 @@ with open("props", "rb") as f:
     p.load(f, "utf-8")
 user = p.properties['user']
 password = p.properties['password']
-database_name =  p.properties['database_name']
-mongo_string = f'mongodb+srv://{user}:{password}@{database_name}'
+database_address =  p.properties['database_address']
+database_name = 'blazemeter'
+
+
+mongo_string = f'mongodb+srv://{user}:{password}@{database_address}/{database_name}'
 
 cluster = MongoClient(mongo_string)
 
