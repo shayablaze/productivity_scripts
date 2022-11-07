@@ -29,9 +29,13 @@ collection = db["accounts"]
 accounts_with_private_cloud = collection.find({"subscriptions.plan" : {"$in": plans}})
 
 i = 1
+account_ids = []
 for acc in accounts_with_private_cloud:
     print(f'{i})')
     print(acc['uid'])
     print(acc['email'])
     print('')
+    account_ids.append(acc['uid'].replace('a-', ''))
     i+=1
+print('here are account ids')
+print(account_ids)
