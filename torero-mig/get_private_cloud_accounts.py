@@ -84,7 +84,7 @@ print(len(projects_to_exclude))
 collection = db['tests']
 
 start = datetime(2022, 11, 6, 7, 1, 1)
-query = {"$and":[{"deleted": {"$exists":False }}, { "configuration.scriptType": {"$nin" : [ "jmeter", "taurus"  ]}    }, {"lastRunTime": {"$gte":start} }]}
+query = {"$and":[{"deleted": {"$exists":False }}, { "configuration.scriptType": {"$in" : [ "jmeter", "taurus"  ]}    }, {"lastRunTime": {"$gte":start} }]}
 
 tests_from_db = collection.find(   query)
 
