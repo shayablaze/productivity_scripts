@@ -76,4 +76,12 @@ for proj in projects_from_blaze:
 
 print('FROM BLAZEMETER PROJECT to exclude')
 print(projects_to_exclude)
+print(len(projects_to_exclude))
+
+
+collection = db['tests']
+
+query = {}
+
+
 print('DONE')
