@@ -83,27 +83,27 @@ print(len(projects_to_exclude))
 
 collection = db['tests']
 
-start = datetime(2022, 11, 6, 7, 1, 1)
+start = datetime(2022, 5, 8, 7, 1, 1)
 query = {"$and":[{"project": {"$nin":projects_to_exclude}}, {"deleted": {"$exists":False }}, { "configuration.scriptType": {"$in" : [ "jmeter", "taurus"  ]}    }, {"lastRunTime": {"$gte":start} }]}
 
 tests_from_db = collection.find(   query)
 
 print('printing tests')
 i = 1
-for test in tests_from_db:
-    test_name=test['name']
-    configuration = test['configuration']
-    print(f'{i}) {test_name}')
-    test_id = test['_id']
-    if "scriptType" in configuration:
-        if  configuration["scriptType"] =="" :
-            print(f'this test has empty scriptType {test_id}')
-        print(configuration["scriptType"])
-    else:
-
-        print(f'whats here {test_id}')
-
-    i+=1
+# for test in tests_from_db:
+#     test_name=test['name']
+#     configuration = test['configuration']
+#     print(f'{i}) {test_name}')
+#     test_id = test['_id']
+#     if "scriptType" in configuration:
+#         if  configuration["scriptType"] =="" :
+#             print(f'this test has empty scriptType {test_id}')
+#         print(configuration["scriptType"])
+#     else:
+#
+#         print(f'whats here {test_id}')
+#
+#     i+=1
 number_of_tests = collection.count_documents(query)
 print(f'number of tests is {number_of_tests}')
 print('DONE')
