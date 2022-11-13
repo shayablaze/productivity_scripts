@@ -18,13 +18,12 @@ url_prod = 'https://prod-rc.blazemeter.com'
 params = {
     'shouldLoop': 'false',
     'numberOfTestsPerLoop': 1,
-    'delayInSeconds': 100,
-    'accountIds': ["1", "2"],
+    'delayInSeconds': 10,
 }
 
 json_data = {
     'accountIds': [
-        1,4
+        # 6
     ],
 }
 
