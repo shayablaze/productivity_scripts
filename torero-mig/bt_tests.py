@@ -1,9 +1,11 @@
 from datetime import datetime
-
+import pandas as pd
+import openpyxl
 from jproperties import Properties
 from pymongo import MongoClient
 from bson import ObjectId
 p = Properties()
+import os
 with open("props", "rb") as f:
     p.load(f, "utf-8")
 user = p.properties['user']
@@ -55,6 +57,7 @@ tests_from_db = collection.find(   query)
 print('printing tests')
 i = 1
 no_jmeter_versions = []
+elements_for_excel = []
 for test in tests_from_db:
     test_name=test['name']
     test_id=test['_id']
@@ -63,6 +66,7 @@ for test in tests_from_db:
     if configuration and 'designatedJmeterVersions' in configuration:
         jmeter_versions =test['configuration']['designatedJmeterVersions']
         print(f'{i}) Name {test_name}. Id: {test_id}: Jmeter versions {jmeter_versions}')
+        elements_for_excel.append([test_id, test_name, jmeter_versions])
     else:
         no_jmeter_versions.append(test_id)
     i+=1
@@ -70,6 +74,13 @@ number_of_tests = collection.count_documents(query)
 print(f'number of tests is {number_of_tests}')
 print(f'No versions {no_jmeter_versions}')
 
+excel_file_name = 'bt_tests_migrated.py.xlsx'
+if os.path.exists(excel_file_name):
+    os.remove(excel_file_name)
+
+df = pd.DataFrame(elements_for_excel,
+                  columns=['Test ID', 'Test Name', 'jmeter versions'])
+df.to_excel(excel_file_name, sheet_name='BT tests migrated')
 i=0
 for no_jmete in no_jmeter_versions:
     print(f'{i}) {no_jmete}')
