@@ -48,18 +48,31 @@ collection = db['tests']
 
 start = datetime(2022, 5, 8, 7, 1, 1)
 end = datetime(2022, 11, 14, 7, 1, 1)
-query = {"$and":[{"project": {"$in":projects_to_use}}, {"deleted": {"$exists":False}}, {"lastRunTime": {"$exists":True}}, { "configuration.type": {"$nin" : [ "functionalGui" ]}    },{"configuration.testMode": {"$nin" : ["http"]}}, {"configuration.scriptType": {"$in" : ["jmeter", "taurus"]}}, {"lastRunTime": {"$gte":start , "$lte":end}}]}
-
+# query = {"$and":[{"project": {"$in":projects_to_use}}, {"deleted": {"$exists":False}}, {"lastRunTime": {"$exists":True}}, { "configuration.type": {"$nin" : [ "functionalGui" ]}    },{"configuration.testMode": {"$nin" : ["http"]}}, {"configuration.scriptType": {"$in" : ["jmeter", "taurus"]}}, {"lastRunTime": {"$gte":start , "$lte":end}}]}
+query = {"migratedJmeterVersionsFlag":True}
 tests_from_db = collection.find(   query)
 
 print('printing tests')
 i = 1
+no_jmeter_versions = []
 for test in tests_from_db:
     test_name=test['name']
-    test_name=test['_id']
+    test_id=test['_id']
     configuration = test['configuration']
-    print(f'test name : {i}) {test_name}')
+
+    if configuration and 'designatedJmeterVersions' in configuration:
+        jmeter_versions =test['configuration']['designatedJmeterVersions']
+        print(f'{i}) Name {test_name}. Id: {test_id}: Jmeter versions {jmeter_versions}')
+    else:
+        no_jmeter_versions.append(test_id)
     i+=1
 number_of_tests = collection.count_documents(query)
 print(f'number of tests is {number_of_tests}')
+print(f'No versions {no_jmeter_versions}')
+
+i=0
+for no_jmete in no_jmeter_versions:
+    print(f'{i}) {no_jmete}')
+    i+=1
+
 print('DONE')
