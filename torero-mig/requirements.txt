@@ -1,2 +1,4 @@
 jproperties
 requests
+pandas
+openpyxl

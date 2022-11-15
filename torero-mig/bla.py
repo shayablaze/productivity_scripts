@@ -1,26 +1,5 @@
-import os
+import pandas as pd
+import openpyxl
 
-# file_name = 'tests_to_migrate_list.txt'
-# os.remove(file_name)
-# f = open(file_name, "a")
-# count_tests = 0
-# for i in [1,2,3,7]:
-#     f.write(f'{str(i)}, ')
-#     count_tests+=1
-# f.close()
-# print(count_tests)
-
-#
-# arr = [1,2,3,7]
-#
-# bbb = [2,3,4,5,6]
-#
-# arr = list(set(arr) | set(bbb))
-# print(arr)
-
-from datetime import datetime
-
-now = datetime.now()
-
-current_time = now.strftime("%H:%M:%S")
-print("Current Time =", current_time)
+df = pd.DataFrame([[11, 21, 31], [12, 22, 32], [31, 32, 33]],
+                  index=['one', 'two', 'three'], columns=['a', 'b', 'c'])
