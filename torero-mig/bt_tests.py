@@ -61,12 +61,15 @@ elements_for_excel = []
 for test in tests_from_db:
     test_name=test['name']
     test_id=test['_id']
+    project_id=test['project']
+    user_id=test['userId']
+    last_run_time=test['lastRunTime']
     configuration = test['configuration']
 
     if configuration and 'designatedJmeterVersions' in configuration:
         jmeter_versions =test['configuration']['designatedJmeterVersions']
         print(f'{i}) Name {test_name}. Id: {test_id}: Jmeter versions {jmeter_versions}')
-        elements_for_excel.append([test_id, test_name, jmeter_versions])
+        elements_for_excel.append([test_id, f'www.a.blazemeter.com/#/tests/{test_id}' ,project_id,  user_id, last_run_time, jmeter_versions])
     else:
         no_jmeter_versions.append(test_id)
     i+=1
@@ -83,7 +86,7 @@ if os.path.exists(excel_file_name):
     os.remove(excel_file_name)
 
 df = pd.DataFrame(elements_for_excel,
-                  columns=['Test ID', 'Test Name', 'jmeter versions'])
+                  columns=['Test ID', 'Link to test', 'Project Id', 'Who Created', 'Last run date', 'jmeter versions'])
 df.to_excel(excel_file_name, sheet_name='BT tests migrated')
 i=0
 for no_jmete in no_jmeter_versions:
