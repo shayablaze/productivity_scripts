@@ -1,5 +1,6 @@
 from datetime import datetime
 import pandas as pd
+import sys
 import openpyxl
 from jproperties import Properties
 from pymongo import MongoClient
@@ -19,7 +20,25 @@ cluster = MongoClient(mongo_string_blaze)
 db = cluster['blazemeter']
 collection = db['accounts']
 
-query = {'_id':{'$in' : [ 40310, 373013, 165479]}}
+
+
+n = len(sys.argv)
+# print("Total arguments passed:", n)
+
+account_ids = []
+if n <2:
+    print('no account ids provided goodbye')
+    exit()
+else :
+    for i in range(1, n):
+        account_ids.append(int(sys.argv[i]))
+print('result')
+print(account_ids)
+
+
+#40310, 373013, 165479
+
+query = {'_id':{'$in' : account_ids}}
 
 
 accounts_from_blazemeter = collection.find( query )

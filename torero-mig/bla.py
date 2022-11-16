@@ -1,14 +1,15 @@
-import pandas as pd
-import openpyxl
-import os
+import sys
 
-df = pd.DataFrame([[11, 21, 31], [12, 22, 32], [31, 32, 33]],
-                  columns=['Test ID', 'Test Name', 'jmeter versions'])
+# total arguments
+n = len(sys.argv)
+# print("Total arguments passed:", n)
 
-df.to_excel('pandas_to_excel.xlsx', sheet_name='new_sheet_name')
-if os.path.exists("pandas_to_excel.xlsx"):
-   os.remove("pandas_to_excel.xlsx")
-
-newpath = 'excels'
-if not os.path.exists(newpath):
-    os.makedirs(newpath)
+account_ids = []
+if n <2:
+    print('no account ids provided')
+else :
+    print('and i say')
+    for i in range(1, n):
+        account_ids.append(sys.argv[i])
+print('result')
+print(account_ids)
