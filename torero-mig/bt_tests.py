@@ -74,7 +74,11 @@ number_of_tests = collection.count_documents(query)
 print(f'number of tests is {number_of_tests}')
 print(f'No versions {no_jmeter_versions}')
 
-excel_file_name = 'bt_tests_migrated.py.xlsx'
+newpath = 'excels'
+if not os.path.exists(newpath):
+    os.makedirs(newpath)
+
+excel_file_name = f'{newpath}/bt_tests_migrated.py.xlsx'
 if os.path.exists(excel_file_name):
     os.remove(excel_file_name)
 
