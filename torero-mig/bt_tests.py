@@ -112,9 +112,9 @@ for test in tests_from_db:
 tests_from_db.rewind()
 
 collection = db['users']
-query = {"_id": {'$in': users_ids}}
+query_users = {"_id": {'$in': users_ids}}
 
-users = collection.find(   query)
+users = collection.find(   query_users)
 
 user_to_email = {}
 
@@ -138,6 +138,7 @@ for test in tests_from_db:
     else:
         no_jmeter_versions.append(test_id)
     i+=1
+collection = db['tests']
 number_of_tests = collection.count_documents(query)
 print(f'number of tests is {number_of_tests}')
 print(f'No versions {no_jmeter_versions}')
