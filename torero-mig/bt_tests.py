@@ -30,6 +30,23 @@ for acc in accounts_from_blazemeter:
     print(acc['workspaces'])
     workspaces_to_use = list(set(workspaces_to_use) | set(acc['workspaces']))
 
+
+
+
+collection = db['organizations']
+query = {'_id':{'$in' : workspaces_to_use}}
+workspaces_from_blaze = collection.find( query )
+workspace_info = {}
+
+
+for workspace in workspaces_from_blaze:
+    workspace_id = workspace['_id']
+    workspace_name = workspace['name']
+    workspace_info[workspace_id] = workspace_name
+
+
+
+
 collection = db['projects']
 
 query = {"$and":[{"workspace": {"$in":workspaces_to_use}}]}
@@ -37,9 +54,19 @@ query = {"$and":[{"workspace": {"$in":workspaces_to_use}}]}
 
 projects_from_blaze = collection.find( query )
 projects_to_use = []
-
+projects_info = {}
 for proj in projects_from_blaze:
-    projects_to_use.append(proj['_id'])
+
+    proj_id = proj['_id']
+    workspace_id = proj['workspace']
+    project_name = proj['name']
+
+    projects_to_use.append(proj_id)
+    projects_info[proj_id] = {
+        'workspace_id': workspace_id,
+        'workspace_name': workspace_info[workspace_id],
+        'project_name': project_name
+    }
 
 # print('FROM BLAZEMETER PROJECT to exclude')
 # print(projects_to_exclude)
@@ -69,7 +96,7 @@ for test in tests_from_db:
     if configuration and 'designatedJmeterVersions' in configuration:
         jmeter_versions =test['configuration']['designatedJmeterVersions']
         print(f'{i}) Name {test_name}. Id: {test_id}: Jmeter versions {jmeter_versions}')
-        elements_for_excel.append([test_id, f'www.a.blazemeter.com/#/tests/{test_id}' ,project_id,  user_id, last_run_time, jmeter_versions])
+        elements_for_excel.append([test_id, f'www.a.blazemeter.com/#/tests/{test_id}' , projects_info[project_id]['workspace_id'],  projects_info[project_id]['workspace_name']  ,project_id, projects_info[project_id]['project_name'] ,user_id, last_run_time, jmeter_versions])
     else:
         no_jmeter_versions.append(test_id)
     i+=1
@@ -86,7 +113,7 @@ if os.path.exists(excel_file_name):
     os.remove(excel_file_name)
 
 df = pd.DataFrame(elements_for_excel,
-                  columns=['Test ID', 'Link to test', 'Project Id', 'Who Created', 'Last run date', 'jmeter versions'])
+                  columns=['Test ID', 'Link to test', 'Workspace id', 'Workspace name',   'Project Id', 'Project Name', 'Who Created', 'Last run date', 'jmeter versions'])
 df.to_excel(excel_file_name, sheet_name='BT tests migrated')
 i=0
 for no_jmete in no_jmeter_versions:
