@@ -85,6 +85,25 @@ print('printing tests')
 i = 1
 no_jmeter_versions = []
 elements_for_excel = []
+
+
+users_ids = []
+for test in tests_from_db:
+    users_ids = list(set(users_ids) | set([test['userId']]))
+tests_from_db.rewind()
+
+collection = db['users']
+query = {"_id": {'$in': users_ids}}
+
+users = collection.find(   query)
+
+user_to_email = {}
+
+for user in users:
+    user_to_email[user['_id']] = user['email']
+
+
+
 for test in tests_from_db:
     test_name=test['name']
     test_id=test['_id']
@@ -96,7 +115,7 @@ for test in tests_from_db:
     if configuration and 'designatedJmeterVersions' in configuration:
         jmeter_versions =test['configuration']['designatedJmeterVersions']
         print(f'{i}) Name {test_name}. Id: {test_id}: Jmeter versions {jmeter_versions}')
-        elements_for_excel.append([test_id, f'www.a.blazemeter.com/#/tests/{test_id}' , projects_info[project_id]['workspace_id'],  projects_info[project_id]['workspace_name']  ,project_id, projects_info[project_id]['project_name'] ,user_id, last_run_time, jmeter_versions])
+        elements_for_excel.append([test_id, f'www.a.blazemeter.com/#/tests/{test_id}' , projects_info[project_id]['workspace_id'],  projects_info[project_id]['workspace_name']  ,project_id, projects_info[project_id]['project_name'] ,user_to_email[user_id] if user_id in user_to_email else 'Unavailable', last_run_time, jmeter_versions])
     else:
         no_jmeter_versions.append(test_id)
     i+=1
@@ -113,7 +132,7 @@ if os.path.exists(excel_file_name):
     os.remove(excel_file_name)
 
 df = pd.DataFrame(elements_for_excel,
-                  columns=['Test ID', 'Link to test', 'Workspace id', 'Workspace name',   'Project Id', 'Project Name', 'Who Created', 'Last run date', 'jmeter versions'])
+                  columns=['Test ID', 'Link to test', 'Workspace id', 'Workspace name',   'Project Id', 'Project Name', 'Who Created ', 'Last run date', 'jmeter versions'])
 df.to_excel(excel_file_name, sheet_name='BT tests migrated')
 i=0
 for no_jmete in no_jmeter_versions:
