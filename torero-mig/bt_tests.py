@@ -23,8 +23,8 @@ collection = db['accounts']
 
 
 n = len(sys.argv)
-# print("Total arguments passed:", n)
 
+# here you can either do from command line or hard code
 account_ids = []
 if n <2:
     print('no account ids provided goodbye')
@@ -97,7 +97,7 @@ collection = db['tests']
 start = datetime(2022, 5, 8, 7, 1, 1)
 end = datetime(2022, 11, 14, 7, 1, 1)
 # query = {"$and":[{"project": {"$in":projects_to_use}}, {"deleted": {"$exists":False}}, {"lastRunTime": {"$exists":True}}, { "configuration.type": {"$nin" : [ "functionalGui" ]}    },{"configuration.testMode": {"$nin" : ["http"]}}, {"configuration.scriptType": {"$in" : ["jmeter", "taurus"]}}, {"lastRunTime": {"$gte":start , "$lte":end}}]}
-query = {"migratedJmeterVersionsFlag":True}
+query = { "$and": [{"migratedJmeterVersionsFlag":True},   {"project": {"$in":projects_to_use}}      ]      }
 tests_from_db = collection.find(   query)
 
 print('printing tests')
@@ -147,7 +147,8 @@ newpath = 'excels'
 if not os.path.exists(newpath):
     os.makedirs(newpath)
 
-excel_file_name = f'{newpath}/bt_tests_migrated.py.xlsx'
+#here add relevent account
+excel_file_name = f'{newpath}/bt_tests_migrated_165479.xlsx'
 if os.path.exists(excel_file_name):
     os.remove(excel_file_name)
 
