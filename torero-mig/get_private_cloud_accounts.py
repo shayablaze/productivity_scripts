@@ -85,7 +85,7 @@ collection = db['tests']
 
 start = datetime(2022, 5, 8, 7, 1, 1)
 end = datetime(2022, 11, 14, 7, 1, 1)
-query = {"$and":[{"project": {"$nin":projects_to_exclude}}, {"deleted": {"$exists":False }}, {"lastRunTime": {"$exists":True }}, { "configuration.testMode": {"$nin" : [ "http" ]}    }, { "configuration.scriptType": {"$in" : [ "jmeter", "taurus"  ]}    }, {"lastRunTime": {"$gte":start , "$lte":end } }]}
+query = {"$and":[{"project": {"$nin":projects_to_exclude}}, {"deleted": {"$exists":False }}, {"lastRunTime": {"$exists":True }}, { "configuration.testMode": {"$nin" : [ "http" ]}    }, { "configuration.type": {"$nin" : [ "functionalGui" ]}    }, { "configuration.scriptType": {"$in" : [ "jmeter", "taurus"  ]}    }, {"lastRunTime": {"$gte":start , "$lte":end } }]}
 
 tests_from_db = collection.find(   query)
 
