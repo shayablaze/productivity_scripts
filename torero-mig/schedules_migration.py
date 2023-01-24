@@ -117,7 +117,7 @@ number_of_tests = collection.count_documents(query)
 print(f'number of tests is {number_of_tests}')
 
 
-query = {"$and":[{"test": {"$in":all_test_ids_private_cloud}}, {"deleted": {"$exists":False }}]}
+query = {"$and":[{"test": {"$in":all_test_ids_private_cloud}}]}
 collection_schedules = db['schedules']
 schedules_private_cloud = collection_schedules.find(   query)
 
@@ -138,7 +138,7 @@ print(f'number of scheulders for private cloud is {len(scheudle_ids_private_clou
 
 ## non private cloud
 
-query = {"$and":[{"test": {"$nin":all_test_ids_private_cloud}}, {"deleted": {"$exists":False }}]}
+query = {"$and":[{"test": {"$nin":all_test_ids_private_cloud}}]}
 collection_schedules = db['schedules']
 schedules_non_private_cloud = collection_schedules.find(   query)
 
