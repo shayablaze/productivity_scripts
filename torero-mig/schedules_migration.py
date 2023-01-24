@@ -90,16 +90,40 @@ tests_from_db = collection.find(   query)
 
 print('printing tests')
 i = 1
-schedules_ids_private_cloud = []
 all_test_ids_private_cloud = []
 for test in tests_from_db:
     test_id=test['_id']
-    print(f'test id : {i}) {test_id}')
+    # print(f'test id : {i}) {test_id}')
     all_test_ids_private_cloud.append(test_id)
     i+=1
-print('all test ids')
-print(all_test_ids_private_cloud)
-print(f'test array length is {len(all_test_ids_private_cloud)}')
+# print('all test ids')
+# print(all_test_ids_private_cloud)
+# print(f'test array length is {len(all_test_ids_private_cloud)}')
+
 number_of_tests = collection.count_documents(query)
 print(f'number of tests is {number_of_tests}')
-print('DONE')
+
+
+query = {"$and":[{"test": {"$in":all_test_ids_private_cloud}}, {"deleted": {"$exists":False }}]}
+collection_schedules = db['schedules']
+schedules_private_cloud = collection_schedules.find(   query)
+
+# print('Printing all schedules')
+# for schedule in schedules_private_cloud:
+#     idd=schedule['_id']
+#     print(f'schedule id : {i}) {idd}')
+#     # all_test_ids_private_cloud.append(test_id)
+#     i+=1
+
+
+number_of_schedulers = collection_schedules.count_documents(query)
+print(f'number of scheulders for private cloud is {number_of_schedulers}')
+
+## non private cloud
+
+query = {"$and":[{"test": {"$nin":all_test_ids_private_cloud}}, {"deleted": {"$exists":False }}]}
+collection_schedules = db['schedules']
+schedules_private_cloud = collection_schedules.find(   query)
+
+number_of_schedulers = collection_schedules.count_documents(query)
+print(f'number of scheulders for NON private cloud is {number_of_schedulers}')
