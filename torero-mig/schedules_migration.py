@@ -154,3 +154,11 @@ for schedule in schedules_non_private_cloud:
 
 
 print(f'number of scheulders for NON private cloud is {len(scheudle_ids_non_private_cloud)}')
+
+# migrate is private cloud
+
+# collection_schedules = db['schedules']
+# query_is_private_cloud = {"$and":[{"_id": {"$in":scheudle_ids_private_cloud}}]}
+# res = collection_schedules.update_one(query_is_private_cloud, {"$set": {"isPrivateCloud": True}})
+
+print('bla')
