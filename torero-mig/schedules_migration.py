@@ -57,18 +57,30 @@ query = {"$and":[{"_id": {"$in":account_ids} }]}
 accounts_from_blazemeter = collection.find( query )
 
 
-workspaces_to_exclude = []
+workspaces_migrated_from_private_cloud = []
+orgs_migrated = db['organizations']
+query_orgs_migrated = {"$and":[{"migratedFromPc": 'ended' }]}
+workspaces_migrated = orgs_migrated.find( query_orgs_migrated )
+workspaces_ids_migrated = []
+for wm in workspaces_migrated:
+    idd = wm['_id']
+    workspaces_ids_migrated.append(idd)
+
+
+
+
+workspaces_private_cloud = []
 for acc in accounts_from_blazemeter:
     # print(acc['workspaces'])
     # print(acc['name'])
-    workspaces_to_exclude = list(set(workspaces_to_exclude) | set(acc['workspaces']))
+    workspaces_private_cloud = list(set(workspaces_private_cloud) | set(acc['workspaces']))
 # print('FROM BLAZEMETER ACCOUNTS HERE are the workspaces')
 # print(workspaces_to_exclude)
 
-
+workspaces_private_cloud = list(filter(lambda x: x not in workspaces_ids_migrated, workspaces_private_cloud))
 collection = db['projects']
 
-query = {"$and":[{"workspace": {"$in":workspaces_to_exclude} }]}
+query = {"$and":[{"workspace": {"$in":workspaces_private_cloud}}]}
 
 
 projects_from_blaze = collection.find( query )
