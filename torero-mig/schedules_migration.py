@@ -3,6 +3,7 @@ from datetime import datetime
 from jproperties import Properties
 from pymongo import MongoClient
 from bson import ObjectId
+import time
 p = Properties()
 with open("props", "rb") as f:
     p.load(f, "utf-8")
@@ -122,6 +123,7 @@ schedules_private_cloud = collection_schedules.find(   query)
 
 scheudle_ids_private_cloud = []
 print('Printing all schedules private cloud')
+i = 0
 for schedule in schedules_private_cloud:
     idd=schedule['_id']
     # print(f'schedule id : {i}) {idd}')
@@ -129,7 +131,8 @@ for schedule in schedules_private_cloud:
     # all_test_ids_private_cloud.append(test_id)
     i+=1
 
-
+# print('before sleep')
+# time.sleep(10)
 # number_of_schedulers = collection_schedules.count_documents(query)
 print(f'number of scheulders for private cloud is {len(scheudle_ids_private_cloud)}')
 
@@ -141,6 +144,7 @@ schedules_non_private_cloud = collection_schedules.find(   query)
 
 scheudle_ids_non_private_cloud = []
 print('Printing all schedules non private cloud')
+i = 0
 for schedule in schedules_non_private_cloud:
     idd=schedule['_id']
     # print(f'schedule id : {i}) {idd}')
