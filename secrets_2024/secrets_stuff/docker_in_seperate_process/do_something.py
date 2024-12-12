@@ -20,4 +20,4 @@ asyncio.run(run_subprocess())
 
 # Continue with the rest of your program, which will not be blocked
 print("Main program continues running while subprocess is executing.")
-time.sleep(50)
+time.sleep(150)
