@@ -5,9 +5,9 @@ import time
 
 
 async def run_subprocess():
-    # Run the 'write_hello.py' script asynchronously
+    # Run the 'prox_now.py' script asynchronously
     process = await asyncio.create_subprocess_exec(
-        'python', 'write_hello.py', stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        'python', 'prox_now.py', stdout=subprocess.PIPE, stderr=subprocess.PIPE
     )
 
     # Do not wait for the subprocess to finish here, just continue running
