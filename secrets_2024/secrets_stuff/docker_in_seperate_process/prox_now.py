@@ -9,6 +9,7 @@ class RequestLogger:
     def request(self, flow):
         print('whats up i am here finally')
         print(flow.request)
+        print(flow.request.path)
         try:
             import json
             body = json.loads(flow.request.content)
