@@ -11,29 +11,38 @@ class RequestLogger:
         print(flow.request)
         try:
             import json
-
-            flow.request.content = self.replace_secrets_with_stars(flow.request.content)
-
+            secrets_list = ['gondalak']
+            flow.request.content = self.replace_secrets_with_stars([flow.request.content], secrets_list)[0]
+            print('i finished the switch part')
             # body = json.loads(flow.request.content)
             # print("Request Body:", body['name'])
             # body['name'] = 'bemabe'
             # flow.request.content = json.dumps(body).encode('utf-8')
-        except json.JSONDecodeError:
-            print("The body is not JSON")
-    def replace_secrets_with_stars(self, byte_list):
+            print(json.loads(flow.request.content))
+        except Exception as e:
+            print(f"i got exception {str(e)}")
+    def replace_secrets_with_stars(self, byte_list, secrets_list):
         """
-        Replace every occurrence of the bytes sequence 'gondalak' with 'bbb'.
+        Replaces occurrences of secret strings in a list of bytes with '****'.
 
         Args:
-            byte_list (bytes): The input bytes object.
+            byte_list (list of bytes): The list of bytes to process.
+            secrets (list of str): The list of secrets to replace.
 
         Returns:
-            bytes: The modified bytes object with replacements.
+            list of bytes: A new list of bytes with the secrets replaced by '****'.
         """
-        if not isinstance(byte_list, bytes):
-            raise TypeError("Input must be a bytes object.")
+    # Convert secrets to bytes
+        secrets_bytes = [secret.encode('utf-8') for secret in secrets_list]
 
-        return byte_list.replace(b'gondalak', b'nigeria')
+        # Process each byte entry
+        result = []
+        for byte_entry in byte_list:
+            for secret_bytes in secrets_bytes:
+                byte_entry = byte_entry.replace(secret_bytes, b'metal_rules')
+            result.append(byte_entry)
+
+        return result
 
 async def start_proxy(host, port):
     opts = options.Options(listen_host=host, listen_port=port)
