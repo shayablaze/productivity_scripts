@@ -11,12 +11,29 @@ class RequestLogger:
         print(flow.request)
         try:
             import json
-            body = json.loads(flow.request.content)
-            print("Request Body:", body['name'])
-            body['name'] = 'nachon at yodaat'
-            flow.request.content = json.dumps(body).encode('utf-8')
+
+            flow.request.content = self.replace_secrets_with_stars(flow.request.content)
+
+            # body = json.loads(flow.request.content)
+            # print("Request Body:", body['name'])
+            # body['name'] = 'bemabe'
+            # flow.request.content = json.dumps(body).encode('utf-8')
         except json.JSONDecodeError:
             print("The body is not JSON")
+    def replace_secrets_with_stars(self, byte_list):
+        """
+        Replace every occurrence of the bytes sequence 'gondalak' with 'bbb'.
+
+        Args:
+            byte_list (bytes): The input bytes object.
+
+        Returns:
+            bytes: The modified bytes object with replacements.
+        """
+        if not isinstance(byte_list, bytes):
+            raise TypeError("Input must be a bytes object.")
+
+        return byte_list.replace(b'gondalak', b'nigeria')
 
 async def start_proxy(host, port):
     opts = options.Options(listen_host=host, listen_port=port)
