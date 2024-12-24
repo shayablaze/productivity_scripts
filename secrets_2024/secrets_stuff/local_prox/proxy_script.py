@@ -11,7 +11,7 @@ class RequestLogger:
         print(flow.request)
         try:
             import json
-            secrets_list = ['gondalak']
+            secrets_list = ['really', 'sit']
             flow.request.content = self.replace_secrets_with_stars([flow.request.content], secrets_list)[0]
             print('i finished the switch part')
             # body = json.loads(flow.request.content)

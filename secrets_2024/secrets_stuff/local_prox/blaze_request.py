@@ -11,7 +11,7 @@ proxy = {
 json_data = {
     'id': 14524348,
     'isNewTest': True,
-    'name': 'gondalak',
+    'name': 'really dont mind if you sit this one out',
     'userId': 1862206,
     'creatorClientId': 'gui',
     'overrideExecutions': [
