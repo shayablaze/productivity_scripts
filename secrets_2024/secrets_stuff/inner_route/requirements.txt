@@ -1,4 +1,4 @@
 requests
-#markupsafe
-#mitmproxy
+markupsafe
+mitmproxy
 Flask==2.3.3
