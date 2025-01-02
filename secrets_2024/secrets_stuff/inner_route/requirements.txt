@@ -1,0 +1,4 @@
+requests
+#markupsafe
+#mitmproxy
+Flask==2.3.3
