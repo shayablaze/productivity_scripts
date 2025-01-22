@@ -87,6 +87,7 @@ def censor_strings_in_file(strings_to_censor, file_name):
 
 
 import time
+# from filelock import FileLock
 
 def censor_strings_in_file_periodically(strings_to_censor, file_name, interval=30):
     """
@@ -101,10 +102,9 @@ def censor_strings_in_file_periodically(strings_to_censor, file_name, interval=3
         None
     """
     last_position = 0  # Start processing from the beginning of the file initially
-
     while True:
         try:
-            with open(file_name, 'r+') as file:
+           with open(file_name, 'r+') as file:
                 # Move to the last processed position
                 file.seek(0, 2)  # Move to the end of the file to capture its size
                 file_size = file.tell()
@@ -113,7 +113,11 @@ def censor_strings_in_file_periodically(strings_to_censor, file_name, interval=3
                 if file_size > last_position:
                     file.seek(last_position)  # Move to the last processed position
                     new_content = file.read()
-
+                    print('here is the new content')
+                    print('')
+                    print(new_content)
+                    print('')
+                    print('end of new content')
                     # Replace each string in the list with ***********
                     for string in strings_to_censor:
                         new_content = new_content.replace(string, '***********')
@@ -124,9 +128,10 @@ def censor_strings_in_file_periodically(strings_to_censor, file_name, interval=3
                     file.truncate()
 
                     # Update the last position to the current end of the file
-                    last_position = file.tell()
-
+                    last_position = file_size
+                    print('now i will sleep for no reason before upload')
                     print(f"Processed new content up to position {last_position}.")
+                    time.sleep(30)
                 else:
                     print("No new content to process.")
 
@@ -139,5 +144,6 @@ def censor_strings_in_file_periodically(strings_to_censor, file_name, interval=3
 
         time.sleep(interval)
 # Example usage
-strings = ["badword", "deafness"]
+strings = ["badword", "Badword"]
+print('do i get here i wait for you')
 censor_strings_in_file_periodically(strings, "example.txt")
