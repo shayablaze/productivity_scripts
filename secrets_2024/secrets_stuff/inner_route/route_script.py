@@ -7,11 +7,13 @@ from mitmproxy import options
 from mitmproxy.tools import dump
 # Flask app to handle incoming requests
 app = Flask(__name__)
-
+from flask import request
 counter = 1
-@app.route('/do-this', methods=['GET'])
+@app.route('/do-this', methods=['POST'])
 def do_this():
     global counter
+    file_path = request.args.get('file_path')
+    print(f'i got this file path {file_path}')
     counter += 1
     print(f"Hiiiiiii!!!!!! and here is counter {counter}")
     return "OK", 200
