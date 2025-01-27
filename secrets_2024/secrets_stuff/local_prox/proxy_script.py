@@ -9,6 +9,8 @@ class RequestLogger:
     def request(self, flow):
         print('whats up i am here finally')
         print(flow.request)
+        print(flow.request.url)
+
         try:
             import json
             secrets_list = ['really', 'sit']
