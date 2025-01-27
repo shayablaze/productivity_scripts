@@ -9,14 +9,17 @@ from mitmproxy.tools import dump
 app = Flask(__name__)
 
 from flask import request
-last_position = 0
-def censor_strings_in_file_periodically(last_position, strings_to_censor, file_name):
+position_map = {}
+def censor_strings_in_file_periodically(position_map, strings_to_censor, file_name):
     try:
         with open(file_name, 'r+') as file:
             # Move to the last processed position
             file.seek(0, 2)  # Move to the end of the file to capture its size
             file_size = file.tell()
             print(f'current file size is {file_size}')
+            if not file_name in position_map:
+                position_map[file_name] = 0
+            last_position = position_map[file_name]
             # Check if there's new content
             if file_size > last_position:
                 file.seek(last_position)  # Move to the last processed position
@@ -42,6 +45,7 @@ def censor_strings_in_file_periodically(last_position, strings_to_censor, file_n
                 print(new_content)
                 print(f'now i will sleep for no reason before upload and last_position is {last_position}')
                 print(f"Processed new content up to position {last_position}.")
+                position_map[file_name] = last_position
             else:
                 print("No new content to process.")
 
@@ -55,13 +59,13 @@ def censor_strings_in_file_periodically(last_position, strings_to_censor, file_n
 
 @app.route('/do-this', methods=['POST'])
 def do_this():
-    global last_position
-    print(f"Hiiiiiii!!!!!! and here is counter {last_position}")
+    global position_map
+    print(f"Hiiiiiii!!!!!! and here is counter {position_map}")
     strings = ["badword", "Badword"]
     print('do i get here i wait for you')
     file_path = request.args.get('file_path')
     print(f'i got this file path right here {file_path}')
-    last_position = censor_strings_in_file_periodically(last_position, strings, file_path)
+    last_position = censor_strings_in_file_periodically(position_map, strings, file_path)
     print(f'last position is {last_position}' )
 
 
