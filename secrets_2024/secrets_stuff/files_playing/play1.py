@@ -108,7 +108,7 @@ def censor_strings_in_file_periodically(strings_to_censor, file_name, interval=3
                 # Move to the last processed position
                 file.seek(0, 2)  # Move to the end of the file to capture its size
                 file_size = file.tell()
-
+                print(f'current file size is {file_size}')
                 # Check if there's new content
                 if file_size > last_position:
                     file.seek(last_position)  # Move to the last processed position
@@ -120,7 +120,7 @@ def censor_strings_in_file_periodically(strings_to_censor, file_name, interval=3
                     print('end of new content')
                     # Replace each string in the list with ***********
                     for string in strings_to_censor:
-                        new_content = new_content.replace(string, '***********')
+                        new_content = new_content.replace(string, 'goodword123')
 
                     # Write the updated new content back to the file
                     file.seek(last_position)
@@ -129,9 +129,10 @@ def censor_strings_in_file_periodically(strings_to_censor, file_name, interval=3
 
                     # Update the last position to the current end of the file
                     last_position = file_size
-                    print('now i will sleep for no reason before upload')
+                    print('the updated content is ')
+                    print(new_content)
+                    print(f'now i will sleep for no reason before upload and last_position is {last_position}')
                     print(f"Processed new content up to position {last_position}.")
-                    time.sleep(30)
                 else:
                     print("No new content to process.")
 
