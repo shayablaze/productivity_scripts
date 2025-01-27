@@ -1,4 +1,4 @@
 requests
 markupsafe
 mitmproxy
-Flask==2.3.3
+Flask==3.1.0
