@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 from flask import request
 position_map = {}
-def censor_strings_in_file_periodically(position_map, strings_to_censor, file_name):
+def censor_strings_in_file(position_map, strings_to_censor, file_name):
     try:
         with open(file_name, 'r+') as file:
             # Move to the last processed position
@@ -65,7 +65,7 @@ def do_this():
     print('do i get here i wait for you')
     file_path = request.args.get('file_path')
     print(f'i got this file path right here {file_path}')
-    last_position = censor_strings_in_file_periodically(position_map, strings, file_path)
+    last_position = censor_strings_in_file(position_map, strings, file_path)
     print(f'last position is {last_position}' )
 
 
